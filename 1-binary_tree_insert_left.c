@@ -8,8 +8,8 @@
  * Return: New node pointer if successful, NULL on failure.
  *
  * Description: Inserts a new node to the left of 'parent' node. If 'parent'
- * 		already has a left child, the new node takes its place, and the old left
- * 		child becomes the left child of the new node.
+ *		already has a left child, the new node takes its place, and the old left
+ *		child becomes the left child of the new node.
  */
 
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
