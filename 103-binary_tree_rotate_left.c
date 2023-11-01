@@ -1,53 +1,35 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_is_complete - Checks if a binary tree is complete.
- * @tree: A pointer to the root node of the tree to traverse.
+ * binary_tree_rotate_left - Performs a left-rotation on a binary tree.
+ * @tree: A pointer to the root node of the tree to rotate.
  *
- * Return: If the tree is NULL or not complete, 0.
- *         Otherwise, 1.
+ * Return: A pointer to the new root node of the tree after rotation.
  */
-int binary_tree_is_complete(const binary_tree_t *tree)
+binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
 {
-    levelorder_queue_t *head, *tail;
-    unsigned char flag = 0;
+    if (tree == NULL || tree->right == NULL)
+        return (NULL);
 
-    if (tree == NULL)
-        return (0);
+    binary_tree_t *new_root = tree->right;
+    binary_tree_t *temp = new_root->left;
 
-    head = tail = create_node((binary_tree_t *)tree);
-    if (head == NULL)
-        return (0);
+    new_root->left = tree;
+    tree->right = temp;
 
-    while (head != NULL)
+    if (temp)
+        temp->parent = tree;
+
+    new_root->parent = tree->parent;
+    tree->parent = new_root;
+
+    if (new_root->parent)
     {
-        if (head->node->left != NULL)
-        {
-            if (flag == 1)
-            {
-                free_queue(head);
-                return (0);
-            }
-            push(head->node->left, head, &tail);
-        }
+        if (new_root->parent->left == tree)
+            new_root->parent->left = new_root;
         else
-            flag = 1;
-
-        if (head->node->right != NULL)
-        {
-            if (flag == 1)
-            {
-                free_queue(head);
-                return (0);
-            }
-            push(head->node->right, head, &tail);
-        }
-        else
-            flag = 1;
-
-        pop(&head);
+            new_root->parent->right = new_root;
     }
 
-    free_queue(head);
-    return (1);
+    return new_root;
 }
