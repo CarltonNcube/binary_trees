@@ -2,52 +2,57 @@
 
 /**
  * binary_tree_is_complete - Checks if a binary tree is complete.
- * @tree: A pointer to the root node of the tree to traverse.
+ * @tree: A pointer to the root node of the tree to check.
  *
- * Return: If the tree is NULL or not complete, 0.
- *         Otherwise, 1.
+ * Return: 1 if the tree is complete, 0 otherwise.
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-    levelorder_queue_t *head, *tail;
-    unsigned char flag = 0;
+    levelorder_queue_t *queue = NULL;
+    int seen_null = 0;
 
     if (tree == NULL)
         return (0);
 
-    head = tail = create_node((binary_tree_t *)tree);
-    if (head == NULL)
+    queue = create_node((binary_tree_t *)tree);
+    if (queue == NULL)
         return (0);
 
-    while (head != NULL)
+    while (queue != NULL)
     {
-        if (head->node->left != NULL)
+        binary_tree_t *current = queue->node;
+
+        if (current->left)
         {
-            if (flag == 1)
+            if (seen_null)
             {
-                free_queue(head);
+                free_queue(queue);
                 return (0);
             }
-            push(head->node->left, head, &tail);
+            push(current->left, queue);
         }
         else
-            flag = 1;
-
-        if (head->node->right != NULL)
         {
-            if (flag == 1)
+            seen_null = 1;
+        }
+
+        if (current->right)
+        {
+            if (seen_null)
             {
-                free_queue(head);
+                free_queue(queue);
                 return (0);
             }
-            push(head->node->right, head, &tail);
+            push(current->right, queue);
         }
         else
-            flag = 1;
+        {
+            seen_null = 1;
+        }
 
-        pop(&head);
+        pop(&queue);
     }
 
-    free_queue(head);
+    free_queue(queue);
     return (1);
 }
