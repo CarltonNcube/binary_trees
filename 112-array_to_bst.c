@@ -9,20 +9,20 @@
  */
 bst_t *array_to_bst(int *array, size_t size)
 {
-    bst_t *root = NULL;
-    size_t i;
+    bst_t *tree = NULL;
 
-    if (array == NULL || size == 0)
+    if (array == NULL)
         return NULL;
 
-    for (i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
-        if (bst_insert(&root, array[i]) == NULL)
+        bst_t *node = bst_insert(&tree, array[i]);
+        if (node == NULL)
         {
-            bst_delete(root);
+            bst_delete(tree);
             return NULL;
         }
     }
 
-    return root;
+    return tree;
 }
