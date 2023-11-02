@@ -9,8 +9,8 @@
  *         Otherwise - a pointer to the new node.
  *
  * Description: Inserts a new node to the right of 'parent' node. If 'parent'
- * 		already has a right child, the new node takes its place, and
- * 		the old right child becomes the right child of the new node.
+ *		already has a right child, the new node takes its place, and
+ *		the old right child becomes the right child of the new node.
  */
 binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
 {
