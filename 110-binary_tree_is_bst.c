@@ -2,7 +2,8 @@
 #include "limits.h"
 
 /**
- * is_bst_helper - Helper function to check if a binary tree is a binary search tree.
+ * is_bst_helper - Helper function to check if a binary tree is a binary
+ *		search tree.
  * @tree: A pointer to the current node.
  * @min_value: The minimum allowed value for nodes in the tree.
  * @max_value: The maximum allowed value for nodes in the tree.
@@ -12,13 +13,13 @@
 int is_bst_helper(const binary_tree_t *tree, int min_value, int max_value)
 {
 	if (tree == NULL)
-		return 1;
+		return (1);
 
 	if (tree->n < min_value || tree->n > max_value)
-		return 0;
+		return (0);
 
-	return is_bst_helper(tree->left, min_value, tree->n - 1) &&
-		is_bst_helper(tree->right, tree->n + 1, max_value);
+	return (is_bst_helper(tree->left, min_value, tree->n - 1) &&
+	        is_bst_helper(tree->right, tree->n + 1, max_value));
 }
 
 /**
@@ -30,7 +31,8 @@ int is_bst_helper(const binary_tree_t *tree, int min_value, int max_value)
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
 	if (tree == NULL)
-		return 0;
+		return (0);
 
 	return is_bst_helper(tree, INT_MIN, INT_MAX);
 }
+
